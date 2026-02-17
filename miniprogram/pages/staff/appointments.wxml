@@ -1,0 +1,65 @@
+<!-- pages/staff/appointments.wxml -->
+<view class="appointments-page">
+  <!-- 日期选择 -->
+  <scroll-view class="date-scroll" scroll-x>
+    <view class="date-list">
+      <view 
+        class="date-item {{selectedDate === item.date ? 'selected' : ''}}"
+        wx:for="{{dates}}"
+        wx:key="date"
+        bindtap="selectDate"
+        data-date="{{item.date}}"
+      >
+        {{item.label}}
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 预约列表 -->
+  <view class="list-section">
+    <view wx:if="{{loading}}" class="loading">加载中...</view>
+    
+    <view wx:elif="{{appointments.length === 0}}" class="empty">
+      该日期暂无预约
+    </view>
+    
+    <view wx:else>
+      <view 
+        class="appointment-card"
+        wx:for="{{appointments}}"
+        wx:key="id"
+      >
+        <view class="apt-header">
+          <view class="apt-time">{{item.start_time}} - {{item.end_time}}</view>
+          <view class="apt-status {{item.status}}">{{item.statusText}}</view>
+        </view>
+        
+        <view class="apt-body">
+          <view class="apt-row">
+            <text class="label">服务：</text>
+            <text class="value">{{item.serviceText}}</text>
+          </view>
+          <view class="apt-row">
+            <text class="label">顾客：</text>
+            <text class="value">{{item.customer.nickname || item.customer.phone || '顾客'}}</text>
+          </view>
+          <view class="apt-row" wx:if="{{item.notes}}">
+            <text class="label">备注：</text>
+            <text class="value">{{item.notes}}</text>
+          </view>
+        </view>
+        
+        <view class="apt-actions" wx:if="{{item.status === 'confirmed'}}">
+          <button 
+            class="complete-btn"
+            size="mini"
+            bindtap="completeAppointment"
+            data-apt="{{item}}"
+          >
+            核销服务
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

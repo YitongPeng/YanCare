@@ -1,0 +1,139 @@
+<!-- pages/staff/schedule.wxml -->
+<view class="schedule-page">
+  <!-- 步骤指示 -->
+  <view class="steps">
+    <view class="step {{step >= 1 ? 'active' : ''}}">
+      <view class="step-num">1</view>
+      <view class="step-text">选门店</view>
+    </view>
+    <view class="step-line {{step >= 2 ? 'active' : ''}}"></view>
+    <view class="step {{step >= 2 ? 'active' : ''}}">
+      <view class="step-num">2</view>
+      <view class="step-text">选日期</view>
+    </view>
+    <view class="step-line {{step >= 3 ? 'active' : ''}}"></view>
+    <view class="step {{step >= 3 ? 'active' : ''}}">
+      <view class="step-num">3</view>
+      <view class="step-text">填时间</view>
+    </view>
+  </view>
+
+  <!-- 返回按钮 -->
+  <view class="back-nav" wx:if="{{step > 1}}" bindtap="goBack">
+    <text class="back-icon">←</text>
+    <text>返回上一步</text>
+  </view>
+
+  <!-- 步骤1: 选择门店 -->
+  <view class="section" wx:if="{{step === 1}}">
+    <view class="section-title">选择门店</view>
+    <view class="store-list">
+      <view 
+        class="store-item"
+        wx:for="{{stores}}"
+        wx:key="id"
+        bindtap="selectStore"
+        data-store="{{item}}"
+      >
+        <view class="store-name">{{item.name}}</view>
+        <view class="store-address">{{item.address}}</view>
+        <view class="store-arrow">›</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 步骤2: 选择日期 -->
+  <view class="section" wx:if="{{step === 2}}">
+    <view class="selected-info">
+      <text class="label">门店：</text>
+      <text class="value">{{selectedStore.name}}</text>
+    </view>
+    
+    <view class="section-title">选择日期</view>
+    <view class="date-grid">
+      <view 
+        class="date-item"
+        wx:for="{{dates}}"
+        wx:key="date"
+        bindtap="selectDate"
+        data-date="{{item.date}}"
+      >
+        <view class="date-weekday">周{{item.weekDay}}</view>
+        <view class="date-day">{{item.display}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 步骤3: 填写时间 -->
+  <view class="section" wx:if="{{step === 3}}">
+    <view class="selected-info">
+      <text class="label">门店：</text>
+      <text class="value">{{selectedStore.name}}</text>
+    </view>
+    <view class="selected-info">
+      <text class="label">日期：</text>
+      <text class="value">{{selectedDate}}</text>
+    </view>
+    
+    <view class="section-title">设置时间段</view>
+    <view class="time-row">
+      <view class="time-picker">
+        <view class="time-label">上班时间</view>
+        <picker mode="time" value="{{startTime}}" bindchange="onStartTimeChange">
+          <view class="picker-value">{{startTime}}</view>
+        </picker>
+      </view>
+      <view class="time-separator">至</view>
+      <view class="time-picker">
+        <view class="time-label">下班时间</view>
+        <picker mode="time" value="{{endTime}}" bindchange="onEndTimeChange">
+          <view class="picker-value">{{endTime}}</view>
+        </picker>
+      </view>
+    </view>
+    
+    <!-- 提交按钮 -->
+    <button 
+      class="btn-primary submit-btn" 
+      bindtap="submitSchedule"
+      loading="{{loading}}"
+    >
+      确认排班
+    </button>
+  </view>
+
+  <!-- 我的排班 -->
+  <view class="section my-schedules">
+    <view class="section-header">
+      <view class="section-title">我的排班</view>
+      <view class="reset-btn" bindtap="resetFlow" wx:if="{{step > 1}}">+ 新增排班</view>
+    </view>
+    
+    <view wx:if="{{mySchedules.length === 0}}" class="empty">
+      暂无排班记录
+    </view>
+    
+    <view class="schedule-list" wx:else>
+      <view 
+        class="schedule-item"
+        wx:for="{{mySchedules}}"
+        wx:key="id"
+      >
+        <view class="schedule-main">
+          <view class="schedule-store">{{item.store.name || '门店'}}</view>
+          <view class="schedule-detail">
+            <text class="schedule-date">{{item.work_date}}</text>
+            <text class="schedule-time">{{item.start_time}} - {{item.end_time}}</text>
+          </view>
+        </view>
+        <view 
+          class="delete-btn"
+          catchtap="deleteSchedule"
+          data-id="{{item.id}}"
+        >
+          删除
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

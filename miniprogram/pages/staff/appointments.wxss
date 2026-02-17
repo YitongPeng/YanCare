@@ -1,0 +1,112 @@
+/* pages/staff/appointments.wxss */
+.appointments-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+/* 日期选择 */
+.date-scroll {
+  background: #fff;
+  white-space: nowrap;
+  padding: 20rpx 0;
+}
+
+.date-list {
+  display: inline-flex;
+  padding: 0 20rpx;
+}
+
+.date-item {
+  padding: 16rpx 30rpx;
+  margin: 0 10rpx;
+  background: #f5f5f5;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+  color: #666;
+}
+
+.date-item.selected {
+  background: #1AAD19;
+  color: #fff;
+}
+
+/* 列表 */
+.list-section {
+  padding: 30rpx;
+}
+
+.loading, .empty {
+  text-align: center;
+  padding: 60rpx;
+  color: #999;
+}
+
+.appointment-card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.apt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.apt-time {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.apt-status {
+  font-size: 24rpx;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  background: #f5f5f5;
+  color: #666;
+}
+
+.apt-status.confirmed {
+  background: #fff3e0;
+  color: #ff9800;
+}
+
+.apt-status.completed {
+  background: #e8f5e9;
+  color: #1AAD19;
+}
+
+.apt-row {
+  display: flex;
+  font-size: 28rpx;
+  margin-bottom: 12rpx;
+}
+
+.apt-row .label {
+  color: #999;
+  width: 100rpx;
+}
+
+.apt-row .value {
+  color: #333;
+  flex: 1;
+}
+
+.apt-actions {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #eee;
+  text-align: right;
+}
+
+.complete-btn {
+  background: #1AAD19;
+  color: #fff;
+  font-size: 26rpx;
+  padding: 12rpx 40rpx;
+}

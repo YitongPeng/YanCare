@@ -1,0 +1,127 @@
+/* pages/about/about.wxss */
+.about-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.header {
+  background: linear-gradient(135deg, #1AAD19 0%, #129611 100%);
+  padding: 80rpx 40rpx;
+  text-align: center;
+  color: #fff;
+}
+
+.logo {
+  font-size: 60rpx;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+}
+
+.slogan {
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+.section {
+  background: #fff;
+  margin: 30rpx;
+  border-radius: 16rpx;
+  padding: 30rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.content {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.8;
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.service-item:last-child {
+  border-bottom: none;
+}
+
+.service-icon {
+  font-size: 50rpx;
+  margin-right: 24rpx;
+}
+
+.service-name {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.service-desc {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 4rpx;
+}
+
+.contact-item {
+  font-size: 28rpx;
+  color: #666;
+  padding: 16rpx 0;
+}
+
+/* 协议内容样式 */
+.paragraph {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.8;
+  margin-bottom: 20rpx;
+}
+
+.subtitle {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin: 30rpx 0 16rpx;
+}
+
+.bold {
+  font-weight: 600;
+  color: #333;
+}
+
+.update-time {
+  color: #999;
+  font-size: 24rpx;
+  margin-top: 40rpx;
+  text-align: right;
+}
+
+/* 链接列表 */
+.link-list {
+  margin-top: 10rpx;
+}
+
+.link-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #eee;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.link-item:last-child {
+  border-bottom: none;
+}
+
+.link-item .arrow {
+  color: #999;
+}

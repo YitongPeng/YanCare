@@ -1,0 +1,101 @@
+<!-- pages/login/login.wxml -->
+<view class="login-page">
+  <!-- Logo区域 -->
+  <view class="logo-section">
+    <view class="logo">燕斛堂</view>
+    <view class="slogan">专业养发护发</view>
+  </view>
+
+  <!-- 角色选择 -->
+  <view class="role-section">
+    <view class="role-title">请选择您的身份</view>
+    
+    <view class="role-options">
+      <view 
+        class="role-card {{role === 'customer' ? 'active' : ''}}" 
+        bindtap="selectCustomer"
+      >
+        <image class="role-icon-img" src="/images/customer-icon.jpeg" mode="aspectFit" />
+        <view class="role-name">我是顾客</view>
+        <view class="role-desc">AI咨询、预约体验</view>
+      </view>
+      
+      <view 
+        class="role-card {{role === 'staff' ? 'active' : ''}}" 
+        bindtap="selectStaff"
+      >
+        <image class="role-icon-img" src="/images/staff-icon.jpeg" mode="aspectFit" />
+        <view class="role-name">我是员工</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 顾客输入区域 -->
+  <view class="name-input-section" wx:if="{{role === 'customer'}}">
+    <view class="input-group">
+      <text class="input-label">您的名字</text>
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="请输入您的名字" 
+        value="{{nickname}}"
+        bindinput="onNicknameInput"
+        maxlength="20"
+      />
+    </view>
+    <view class="input-tip">每个名字是一个独立账号，请记住您的名字</view>
+  </view>
+
+  <!-- 员工输入区域 -->
+  <view class="name-input-section" wx:if="{{role === 'staff'}}">
+    <view class="input-group">
+      <text class="input-label">员工密码</text>
+      <input 
+        class="input" 
+        type="text" 
+        password="{{true}}"
+        placeholder="请输入员工密码" 
+        value="{{staffPassword}}"
+        bindinput="onPasswordInput"
+      />
+    </view>
+    
+    <view class="input-group">
+      <text class="input-label">您的姓名</text>
+      <input 
+        class="input" 
+        type="text" 
+        placeholder="请输入您的姓名" 
+        value="{{nickname}}"
+        bindinput="onNicknameInput"
+      />
+    </view>
+  </view>
+
+  <!-- 隐私协议勾选 -->
+  <view class="agreement-section">
+    <view class="agreement-checkbox" bindtap="toggleAgreement">
+      <view class="checkbox {{agreed ? 'checked' : ''}}">
+        <text wx:if="{{agreed}}">✓</text>
+      </view>
+      <view class="agreement-text">
+        我已阅读并同意
+        <text class="link" catchtap="openUserAgreement">《用户协议》</text>
+        和
+        <text class="link" catchtap="openPrivacyPolicy">《隐私政策》</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 登录按钮 -->
+  <view class="login-btn-section">
+    <button 
+      class="btn-primary login-btn" 
+      bindtap="handleLogin"
+      loading="{{loading}}"
+      disabled="{{loading || !agreed}}"
+    >
+      确认登录
+    </button>
+  </view>
+</view>

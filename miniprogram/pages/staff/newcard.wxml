@@ -1,0 +1,136 @@
+<!-- pages/staff/newcard.wxml -->
+<view class="newcard-page">
+  <!-- 步骤指示 -->
+  <view class="steps">
+    <view class="step {{step >= 1 ? 'active' : ''}}">
+      <view class="step-num">1</view>
+      <view class="step-text">姓名</view>
+    </view>
+    <view class="step-line {{step >= 2 ? 'active' : ''}}"></view>
+    <view class="step {{step >= 2 ? 'active' : ''}}">
+      <view class="step-num">2</view>
+      <view class="step-text">服务</view>
+    </view>
+    <view class="step-line {{step >= 3 ? 'active' : ''}}"></view>
+    <view class="step {{step >= 3 ? 'active' : ''}}">
+      <view class="step-num">3</view>
+      <view class="step-text">卡类型</view>
+    </view>
+  </view>
+
+  <!-- 返回按钮 -->
+  <view class="back-nav" wx:if="{{step > 1}}" bindtap="goBack">
+    <text class="back-icon">←</text>
+    <text>返回上一步</text>
+  </view>
+
+  <!-- 步骤1: 输入姓名和手机号 -->
+  <view class="section" wx:if="{{step === 1}}">
+    <view class="section-title">输入客户信息</view>
+    <view class="input-box">
+      <view class="input-label">客户姓名</view>
+      <input 
+        class="name-input"
+        type="text"
+        placeholder="请输入新客户姓名"
+        value="{{customerName}}"
+        bindinput="onNameInput"
+      />
+    </view>
+    <view class="input-box">
+      <view class="input-label">手机号</view>
+      <input 
+        class="name-input"
+        type="number"
+        maxlength="11"
+        placeholder="请输入客户手机号"
+        value="{{customerPhone}}"
+        bindinput="onPhoneInput"
+      />
+    </view>
+    <button 
+      class="btn-primary next-btn" 
+      bindtap="confirmName"
+      disabled="{{!customerName || !customerPhone}}"
+    >
+      下一步
+    </button>
+  </view>
+
+  <!-- 步骤2: 选择服务类型 -->
+  <view class="section" wx:if="{{step === 2}}">
+    <view class="selected-info">
+      <text class="label">客户：</text>
+      <text class="value">{{customerName}}</text>
+    </view>
+    
+    <view class="section-title">选择服务类型（可多选）</view>
+    <view class="service-list">
+      <view 
+        class="service-item {{item.selected ? 'selected' : ''}}"
+        wx:for="{{services}}"
+        wx:key="type"
+        bindtap="toggleService"
+        data-type="{{item.type}}"
+      >
+        <view class="service-check">{{item.selected ? '✓' : ''}}</view>
+        <view class="service-icon">{{item.icon}}</view>
+        <view class="service-name">{{item.name}}</view>
+      </view>
+    </view>
+    <button 
+      class="btn-primary next-btn" 
+      bindtap="confirmServices"
+      disabled="{{selectedServices.length === 0}}"
+    >
+      下一步
+    </button>
+  </view>
+
+  <!-- 步骤3: 选择卡类型 -->
+  <view class="section" wx:if="{{step === 3}}">
+    <view class="selected-info">
+      <text class="label">客户：</text>
+      <text class="value">{{customerName}}</text>
+    </view>
+    <view class="selected-info">
+      <text class="label">服务：</text>
+      <text class="value">
+        <text wx:for="{{services}}" wx:key="type" wx:if="{{item.selected}}">
+          {{item.name}}{{index < selectedServices.length - 1 ? '、' : ''}}
+        </text>
+      </text>
+    </view>
+    
+    <view class="section-title">选择卡类型</view>
+    
+    <view wx:if="{{availableCards.length === 0}}" class="empty">
+      暂无匹配的卡类型
+    </view>
+    
+    <view class="card-list" wx:else>
+      <view 
+        class="card-item {{selectedCard && selectedCard.id === item.id ? 'selected' : ''}}"
+        wx:for="{{availableCards}}"
+        wx:key="id"
+        bindtap="selectCard"
+        data-card="{{item}}"
+      >
+        <view class="card-name">{{item.name}}</view>
+        <view class="card-info">
+          <text wx:if="{{item.total_times}}">{{item.total_times}}次</text>
+          <text wx:if="{{item.validity_days}}"> · {{item.validity_days}}天有效</text>
+        </view>
+        <view class="card-note" wx:if="{{item.notes}}">{{item.notes}}</view>
+      </view>
+    </view>
+    
+    <button 
+      class="btn-primary next-btn" 
+      bindtap="confirmNewCard"
+      loading="{{loading}}"
+    >
+      确认开卡
+    </button>
+  </view>
+</view>

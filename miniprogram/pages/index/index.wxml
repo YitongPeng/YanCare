@@ -1,0 +1,232 @@
+<!-- pages/index/index.wxml -->
+<view class="index-page">
+  <!-- 头部（固定） -->
+  <view class="header">
+    <view class="header-title">燕斛堂</view>
+    <view class="header-subtitle">离了燕子谁来养您的发🥹</view>
+  </view>
+
+  <!-- 标签导航（固定） -->
+  <view class="tab-nav">
+    <view 
+      class="tab-item {{currentTab === 0 ? 'active' : ''}}" 
+      bindtap="switchTab" 
+      data-index="0"
+    >服务</view>
+    <view 
+      class="tab-item {{currentTab === 1 ? 'active' : ''}}" 
+      bindtap="switchTab" 
+      data-index="1"
+    >门店</view>
+    <view 
+      class="tab-item {{currentTab === 2 ? 'active' : ''}}" 
+      bindtap="switchTab" 
+      data-index="2"
+    >团队介绍</view>
+  </view>
+
+  <!-- 滑动内容区域 -->
+  <swiper 
+    class="content-swiper" 
+    current="{{currentTab}}" 
+    bindchange="onSwiperChange"
+    duration="300"
+    style="height: {{swiperHeight}}px;"
+  >
+    <!-- 服务页面 -->
+    <swiper-item>
+      <scroll-view scroll-y class="tab-content">
+        <!-- 洗发水 -->
+        <view class="service-section">
+          <view class="service-title">仁味康 中药洗发水</view>
+          <image class="service-img" src="/images/洗发水.jpeg" mode="widthFix" />
+          <view class="service-text">
+            中药洗发水含有天然中药成分，如人参、薄荷、首乌等，温和无刺激。仁味康洗发水有五种配方，针对不同发质和头皮情况：
+          </view>
+          <view class="service-list">
+            <view class="service-list-item">
+              <view class="item-title">控油去屑平衡洗发乳</view>
+              <view class="item-tag">油性发质</view>
+              <view class="item-desc">抑制头皮细菌和真菌，减少油脂堆积，控油防脱，保持清爽。</view>
+            </view>
+            <view class="service-list-item">
+              <view class="item-title">轻柔防断去屑洗发乳</view>
+              <view class="item-tag">干性/敏感发质</view>
+              <view class="item-desc">温和保湿，消除干屑，锁住水分，修复受损，减少分叉。</view>
+            </view>
+            <view class="service-list-item">
+              <view class="item-title">丰盈蓬松强韧洗发乳</view>
+              <view class="item-tag">细软发质</view>
+              <view class="item-desc">增加蓬松感和立体感，改善发质韧度，增加发量和光泽。</view>
+            </view>
+            <view class="service-list-item">
+              <view class="item-title">姜汁平衡洗发乳</view>
+              <view class="item-tag">脱发人群</view>
+              <view class="item-desc">促进头发生长，滋养头皮，预防脱发，促进头皮血液循环。</view>
+            </view>
+            <view class="service-list-item">
+              <view class="item-title">草本植萃精华赋活霜</view>
+              <view class="item-tag">护发素</view>
+              <view class="item-desc">纯中药护发素，形成保护膜，防止分叉断裂，滋养锁水，增加弹性光泽。</view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 洗头服务 -->
+        <view class="service-section">
+          <view class="service-title">姜疗洗头</view>
+          <view class="service-duration">约20分钟</view>
+          <image class="service-img" src="/images/洗头图片.jpeg" mode="widthFix" />
+          <view class="service-text">
+            配合按摩膏使用，清理头皮堆积的垃圾和油脂，使头皮更好吸收营养。
+          </view>
+          <view class="service-benefits">
+            <view class="benefit-item">去屑止痒，滋养头皮</view>
+            <view class="benefit-item">促进头发生长</view>
+            <view class="benefit-item">活经通脉，提神醒脑</view>
+            <view class="benefit-item">缓解头痛，消除疲劳</view>
+            <view class="benefit-item">驱除体内风寒</view>
+          </view>
+        </view>
+
+        <!-- 泡头服务 -->
+        <view class="service-section">
+          <view class="service-title">中药泡头</view>
+          <view class="service-duration">约45分钟</view>
+          <view class="service-img-group">
+            <image class="service-img-half" src="/images/泡头01.jpeg" mode="aspectFill" />
+            <image class="service-img-half" src="/images/泡头02.jpeg" mode="aspectFill" />
+          </view>
+          <view class="service-text">
+            真材实料看得见！由无患子、皂荚、何首乌、枸杞、侧柏叶、当归、姜根、柠檬果、茶籽、人参根等14种中药，经过6小时熬制而成。现熬现泡，水循环系统反复冲泡。
+          </view>
+          <view class="service-suitable">
+            <view class="suitable-title">适宜人群</view>
+            <view class="suitable-tags">
+              <text class="suitable-tag">头皮屑</text>
+              <text class="suitable-tag">头皮痒</text>
+              <text class="suitable-tag">须发早白</text>
+              <text class="suitable-tag">脱发</text>
+              <text class="suitable-tag">毛囊炎</text>
+              <text class="suitable-tag">头发干枯分叉</text>
+            </view>
+          </view>
+          <view class="service-benefits">
+            <view class="benefit-item">补充头发养分，改善头皮环境</view>
+            <view class="benefit-item">使头发乌黑亮泽</view>
+            <view class="benefit-item">祛风散寒，治疗头晕头痛</view>
+            <view class="benefit-item">改善睡眠</view>
+          </view>
+        </view>
+
+        <!-- 养发服务 -->
+        <view class="service-section">
+          <view class="service-title">磁疗梳中药养发</view>
+          <image class="service-img" src="/images/养发.jpeg" mode="widthFix" />
+          <view class="service-text">
+            自古以来，梳头是保健养生之道，"头梳千遍，病少一半"。
+          </view>
+          <view class="service-highlight">
+            <view class="highlight-title">磁疗梳的作用</view>
+            <view class="highlight-text">促进头皮血液循环，缓解头痛、头晕、颈部僵硬等不适，改善睡眠，增强记忆力，减轻焦虑和压力。</view>
+          </view>
+          <view class="service-highlight">
+            <view class="highlight-title">中药养发</view>
+            <view class="highlight-text">何首乌、黑芝麻、当归等中药富含营养，为头发提供蛋白质、维生素、矿物质，增强头发韧性与光泽。侧柏叶、干姜等可刺激头皮血管扩张，为毛囊输送更多营养，促进头发生长。</view>
+          </view>
+          <view class="service-note">根据客人头发情况，量身定制养发方案</view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+
+    <!-- 门店页面 -->
+    <swiper-item>
+      <scroll-view scroll-y class="tab-content">
+        <view class="store-list">
+          <view wx:if="{{loading}}" class="loading">
+            <text>加载中...</text>
+          </view>
+          
+          <view wx:elif="{{stores.length === 0}}" class="empty">
+            <text>暂无门店信息</text>
+          </view>
+          
+          <view wx:else>
+            <view 
+              class="store-card {{item.isNearest ? 'nearest' : ''}}" 
+              wx:for="{{stores}}" 
+              wx:key="id"
+            >
+              <view class="nearest-tag" wx:if="{{item.isNearest}}">离您最近</view>
+              
+              <view class="store-info">
+                <view class="store-name">{{item.name}}</view>
+                <view class="store-address">📍 {{item.address}}</view>
+                <view class="store-time">🕐 营业时间：{{item.opening_time}} - {{item.closing_time}}</view>
+                
+                <view class="store-distance-info" wx:if="{{item.distanceText}}">
+                  <text class="distance">🚗 {{item.distanceText}}</text>
+                  <text class="driving-time">· 驾车{{item.drivingTime}}</text>
+                </view>
+              </view>
+              
+              <view class="store-actions">
+                <view class="action-btns">
+                  <view 
+                    class="action-btn" 
+                    catchtap="navigateToStore"
+                    data-store="{{item}}"
+                  >导航</view>
+                  <view 
+                    class="action-btn primary" 
+                    catchtap="goToAppointment"
+                    data-store="{{item}}"
+                  >预约</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+
+    <!-- 团队介绍页面 -->
+    <swiper-item>
+      <scroll-view scroll-y class="tab-content">
+        <view class="team-section">
+          <view class="team-title">专业团队 用心服务</view>
+          <image class="team-img" src="/images/店内真实运营.jpeg" mode="widthFix" />
+          <view class="team-text">
+            燕斛堂养发馆汇聚了一支专业、热情的服务团队。每位技师都经过严格培训，精通中医养发理论与实操技术，致力于为每一位顾客提供个性化的头皮护理方案。
+          </view>
+        </view>
+
+        <view class="team-section">
+          <view class="team-title">匠心传承 专注养发</view>
+          <image class="team-img" src="/images/员工.jpeg" mode="widthFix" />
+          <view class="team-text">
+            我们秉承"以人为本，健康养发"的理念，采用纯天然中药配方，结合现代科技设备，为您的秀发保驾护航。从洗护到养护，每一个环节都精益求精，只为让您拥有健康亮丽的秀发。
+          </view>
+        </view>
+
+        <view class="team-values">
+          <view class="value-item">
+            <view class="value-icon">🌿</view>
+            <view class="value-title">天然中药</view>
+            <view class="value-desc">精选道地药材</view>
+          </view>
+          <view class="value-item">
+            <view class="value-icon">👩‍⚕️</view>
+            <view class="value-title">专业技师</view>
+            <view class="value-desc">严格培训上岗</view>
+          </view>
+          <view class="value-item">
+            <view class="value-icon">💝</view>
+            <view class="value-title">贴心服务</view>
+            <view class="value-desc">量身定制方案</view>
+          </view>
+        </view>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
+</view>

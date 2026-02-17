@@ -1,0 +1,153 @@
+<!-- pages/about/about.wxml -->
+<view class="about-page">
+  <!-- 用户协议 -->
+  <view wx:if="{{type === 'user'}}">
+    <view class="section">
+      <view class="section-title">用户协议</view>
+      <view class="content">
+        <view class="paragraph">欢迎使用燕斛堂养发小程序（以下简称"本小程序"）。在使用本小程序前，请您仔细阅读本协议。</view>
+        
+        <view class="subtitle">一、服务内容</view>
+        <view class="paragraph">本小程序由江阴市燕斛堂健康科技有限公司运营，为用户提供门店信息查看、在线预约、会员卡管理、AI智能咨询等服务。</view>
+        
+        <view class="subtitle">二、用户账号</view>
+        <view class="paragraph">1. 用户通过输入姓名创建账号，一个姓名对应一个独立账号。</view>
+        <view class="paragraph">2. 用户应妥善保管自己的账号信息，因账号信息泄露导致的损失由用户自行承担。</view>
+        <view class="paragraph">3. 用户不得将账号转让、出借给他人使用。</view>
+        
+        <view class="subtitle">三、用户行为规范</view>
+        <view class="paragraph">1. 用户应遵守国家法律法规，不得利用本小程序从事违法活动。</view>
+        <view class="paragraph">2. 用户不得发布违法、有害、淫秽、暴力等不当信息。</view>
+        <view class="paragraph">3. 用户不得干扰本小程序的正常运行。</view>
+        
+        <view class="subtitle">四、预约服务</view>
+        <view class="paragraph">1. 用户可通过本小程序预约门店服务。</view>
+        <view class="paragraph">2. 预约成功后，请按时到店，如需取消请提前操作。</view>
+        <view class="paragraph">3. 多次无故爽约可能影响后续预约权限。</view>
+        
+        <view class="subtitle">五、免责声明</view>
+        <view class="paragraph">1. 本小程序提供的AI咨询功能仅供参考，不构成医疗建议。如有健康问题，请咨询专业医生。</view>
+        <view class="paragraph">2. 因不可抗力导致的服务中断，本小程序不承担责任。</view>
+        
+        <view class="subtitle">六、协议修改</view>
+        <view class="paragraph">本公司有权根据需要修改本协议，修改后的协议将在本小程序公布。继续使用本小程序即表示同意修改后的协议。</view>
+        
+        <view class="paragraph update-time">最后更新：2026年2月11日</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 隐私政策 -->
+  <view wx:elif="{{type === 'privacy'}}">
+    <view class="section">
+      <view class="section-title">隐私政策</view>
+      <view class="content">
+        <view class="paragraph">燕斛堂养发小程序（以下简称"我们"）非常重视用户的隐私保护。本隐私政策说明我们如何收集、使用、存储您的个人信息。</view>
+        
+        <view class="subtitle">一、我们收集的信息</view>
+        <view class="paragraph">1. <text class="bold">姓名/昵称</text>：用于创建账号和识别用户身份。</view>
+        <view class="paragraph">2. <text class="bold">位置信息</text>：仅在您点击"导航"功能时获取，用于规划到门店的路线。我们不会在后台持续获取您的位置。</view>
+        <view class="paragraph">3. <text class="bold">预约信息</text>：包括预约时间、门店、服务项目等，用于提供预约服务。</view>
+        <view class="paragraph">4. <text class="bold">对话记录</text>：您与AI助手的对话内容，用于提供智能咨询服务。</view>
+        
+        <view class="subtitle">二、信息的使用</view>
+        <view class="paragraph">我们收集的信息仅用于：</view>
+        <view class="paragraph">1. 提供、维护和改进我们的服务</view>
+        <view class="paragraph">2. 处理您的预约请求</view>
+        <view class="paragraph">3. 提供AI智能咨询服务</view>
+        <view class="paragraph">4. 提供门店导航服务</view>
+        
+        <view class="subtitle">三、信息的存储</view>
+        <view class="paragraph">1. 您的信息存储在我们的安全服务器上。</view>
+        <view class="paragraph">2. 我们采取合理的技术措施保护您的信息安全。</view>
+        <view class="paragraph">3. 我们会按照法律法规要求的最短时间存储您的信息。</view>
+        
+        <view class="subtitle">四、信息的共享</view>
+        <view class="paragraph">我们不会将您的个人信息出售、交易或转让给第三方，除非：</view>
+        <view class="paragraph">1. 获得您的明确同意</view>
+        <view class="paragraph">2. 法律法规要求</view>
+        <view class="paragraph">3. 保护我们或他人的合法权益</view>
+        
+        <view class="subtitle">五、您的权利</view>
+        <view class="paragraph">1. 您可以查询、更正您的个人信息。</view>
+        <view class="paragraph">2. 您可以要求删除您的个人信息。</view>
+        <view class="paragraph">3. 您可以撤回对信息收集的同意。</view>
+        
+        <view class="subtitle">六、未成年人保护</view>
+        <view class="paragraph">我们的服务主要面向成年人。如果您是未成年人，请在监护人指导下使用本小程序。</view>
+        
+        <view class="subtitle">七、联系我们</view>
+        <view class="paragraph">如您对本隐私政策有任何疑问，可拨打门店电话：86281118</view>
+        
+        <view class="paragraph update-time">最后更新：2026年2月11日</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 关于我们（默认页面） -->
+  <view wx:else>
+    <view class="header">
+      <view class="logo">燕斛堂</view>
+      <view class="slogan">专业养发护发</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">关于我们</view>
+      <view class="content">
+        燕斛堂养发馆，专注头皮养护，为您提供专业的洗头、泡头、养发服务。我们采用优质的养发产品和专业的护理手法，帮助您改善头皮环境，促进头发健康生长。
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">我们的服务</view>
+      <view class="service-list">
+        <view class="service-item">
+          <view class="service-icon">💆</view>
+          <view class="service-info">
+            <view class="service-name">洗头</view>
+            <view class="service-desc">专业头皮清洁，约30分钟</view>
+          </view>
+        </view>
+        <view class="service-item">
+          <view class="service-icon">🧖</view>
+          <view class="service-info">
+            <view class="service-name">泡头</view>
+            <view class="service-desc">深层清洁+放松，约50分钟</view>
+          </view>
+        </view>
+        <view class="service-item">
+          <view class="service-icon">✨</view>
+          <view class="service-info">
+            <view class="service-name">养发</view>
+            <view class="service-desc">专业头皮护理，约50分钟</view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">联系我们</view>
+      <view class="contact-item">
+        <text>📍 水岸新都店：江阴市人民东路1023号</text>
+      </view>
+      <view class="contact-item">
+        <text>📍 阳光国际店：江阴市先锋路98号</text>
+      </view>
+    </view>
+
+    <!-- 协议链接 -->
+    <view class="section">
+      <view class="section-title">服务条款</view>
+      <view class="link-list">
+        <navigator class="link-item" url="/pages/about/about?type=user">
+          <text>用户协议</text>
+          <text class="arrow">></text>
+        </navigator>
+        <navigator class="link-item" url="/pages/about/about?type=privacy">
+          <text>隐私政策</text>
+          <text class="arrow">></text>
+        </navigator>
+      </view>
+    </view>
+  </view>
+</view>

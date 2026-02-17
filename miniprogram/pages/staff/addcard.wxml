@@ -1,0 +1,72 @@
+<!-- pages/staff/addcard.wxml -->
+<view class="addcard-page">
+  <!-- 搜索用户 -->
+  <view class="section">
+    <view class="section-title">1. 搜索顾客</view>
+    <view class="search-box">
+      <input 
+        class="search-input"
+        type="text"
+        placeholder="搜索顾客姓名"
+        value="{{searchName}}"
+        bindinput="onPhoneInput"
+      />
+      <button class="search-btn" size="mini" bindtap="searchUser">搜索</button>
+    </view>
+    
+    <!-- 搜索结果 -->
+    <view class="search-result" wx:if="{{searchResult.length > 0}}">
+      <view 
+        class="user-item {{selectedUser && selectedUser.id === item.id ? 'selected' : ''}}"
+        wx:for="{{searchResult}}"
+        wx:key="id"
+        bindtap="selectUser"
+        data-user="{{item}}"
+      >
+        <view class="user-name">{{item.nickname || '用户'}}</view>
+        <view class="user-phone">{{item.phone || '无手机号'}}</view>
+      </view>
+    </view>
+    
+    <!-- 已选用户 -->
+    <view class="selected-user" wx:if="{{selectedUser}}">
+      ✓ 已选择：{{selectedUser.nickname || selectedUser.phone || '用户'}}
+    </view>
+  </view>
+
+  <!-- 选择卡类型 -->
+  <view class="section">
+    <view class="section-title">2. 选择卡类型</view>
+    <view class="card-list">
+      <view 
+        class="card-item {{selectedCard && selectedCard.id === item.id ? 'selected' : ''}}"
+        wx:for="{{cardTypes}}"
+        wx:key="id"
+        bindtap="selectCard"
+        data-card="{{item}}"
+      >
+        <view class="card-name">{{item.name}}</view>
+        <view class="card-info">
+          <text>{{item.serviceText}}</text>
+          <text class="dot">·</text>
+          <text>{{item.timesText}}次</text>
+          <text class="dot">·</text>
+          <text>{{item.validityText}}</text>
+        </view>
+        <view class="card-note" wx:if="{{item.notes}}">{{item.notes}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 确认按钮 -->
+  <view class="bottom-bar">
+    <button 
+      class="btn-primary confirm-btn"
+      bindtap="confirmAddCard"
+      loading="{{loading}}"
+      disabled="{{!selectedUser || !selectedCard}}"
+    >
+      确认开卡
+    </button>
+  </view>
+</view>

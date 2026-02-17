@@ -1,0 +1,264 @@
+<!-- pages/appointment/appointment.wxml -->
+<view class="appointment-page">
+  <!-- 步骤指示 -->
+  <view class="steps">
+    <view class="step {{step >= 1 ? 'active' : ''}}">
+      <view class="step-num">1</view>
+      <view class="step-text">门店</view>
+    </view>
+    <view class="step-line {{step >= 2 ? 'active' : ''}}"></view>
+    <view class="step {{step >= 2 ? 'active' : ''}}">
+      <view class="step-num">2</view>
+      <view class="step-text">会员</view>
+    </view>
+    <view class="step-line {{step >= 3 ? 'active' : ''}}"></view>
+    <view class="step {{step >= 3 ? 'active' : ''}}">
+      <view class="step-num">3</view>
+      <view class="step-text">服务</view>
+    </view>
+    <view class="step-line {{step >= 4 ? 'active' : ''}}"></view>
+    <view class="step {{step >= 4 ? 'active' : ''}}">
+      <view class="step-num">4</view>
+      <view class="step-text">时间</view>
+    </view>
+  </view>
+
+  <!-- 返回按钮 -->
+  <view class="back-btn" wx:if="{{step > 1}}" bindtap="goBack">
+    <text class="back-icon">←</text>
+    <text>返回上一步</text>
+  </view>
+
+  <!-- 步骤1: 选择门店 -->
+  <view class="step-content" wx:if="{{step === 1}}">
+    <view class="section-title">选择门店</view>
+    <view class="store-list">
+      <view 
+        class="store-item {{selectedStore && selectedStore.id === item.id ? 'selected' : ''}}"
+        wx:for="{{stores}}"
+        wx:key="id"
+        bindtap="selectStore"
+        data-store="{{item}}"
+      >
+        <view class="store-name">{{item.name}}</view>
+        <view class="store-address">{{item.address}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 步骤2: 是否会员 -->
+  <view class="step-content" wx:if="{{step === 2}}">
+    <!-- 已选门店 -->
+    <view class="selected-info">
+      <text class="label">门店：</text>
+      <text class="value">{{selectedStore.name}}</text>
+    </view>
+
+    <view class="section-title">您是会员吗？</view>
+    <view class="member-options">
+      <view 
+        class="member-option {{isMember === true ? 'selected' : ''}}"
+        bindtap="selectMemberStatus"
+        data-ismember="{{true}}"
+      >
+        <view class="member-icon">💳</view>
+        <view class="member-text">我有卡</view>
+        <view class="member-desc">使用会员卡预约</view>
+      </view>
+      <view 
+        class="member-option {{isMember === false ? 'selected' : ''}}"
+        bindtap="selectMemberStatus"
+        data-ismember="{{false}}"
+      >
+        <view class="member-icon">👤</view>
+        <view class="member-text">我没有卡</view>
+        <view class="member-desc">散客预约</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 步骤3: 选服务 -->
+  <view class="step-content" wx:if="{{step === 3}}">
+    <!-- 已选信息 -->
+    <view class="selected-info">
+      <text class="label">门店：</text>
+      <text class="value">{{selectedStore.name}}</text>
+    </view>
+
+    <!-- 会员：显示卡列表 -->
+    <block wx:if="{{isMember}}">
+      <view wx:if="{{loading}}" class="loading">加载中...</view>
+      
+      <block wx:elif="{{userCards.length > 0}}">
+        <view class="section-title">选择您的卡</view>
+        <view class="card-list">
+          <view 
+            class="card-item {{selectedCard && selectedCard.id === item.id ? 'selected' : ''}} {{item.isExpired || item.remaining_times <= 0 ? 'disabled' : ''}}"
+            wx:for="{{userCards}}"
+            wx:key="id"
+            bindtap="selectCard"
+            data-card="{{item}}"
+          >
+            <view class="card-header">
+              <view class="card-name">{{item.card_name}}</view>
+              <view class="card-status {{item.isExpired ? 'expired' : (item.remaining_times <= 0 ? 'used' : 'valid')}}">
+                {{item.isExpired ? '已过期' : (item.remaining_times <= 0 ? '已用完' : '有效')}}
+              </view>
+            </view>
+            <view class="card-info">
+              <text class="card-times">剩余 {{item.remaining_times}} 次</text>
+              <text class="card-expire">有效期至：{{item.expireDateDisplay}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 选中卡后显示可选服务 -->
+        <block wx:if="{{selectedCard}}">
+          <view class="section-title">选择服务（可多选）</view>
+          <view class="service-list">
+            <view 
+              class="service-item {{item.isSelected ? 'selected' : ''}}"
+              wx:for="{{selectedCard.availableServices}}"
+              wx:key="type"
+              bindtap="toggleService"
+              data-service="{{item}}"
+            >
+              <view class="service-check">{{item.isSelected ? '✓' : ''}}</view>
+              <view class="service-icon">{{item.icon}}</view>
+              <view class="service-info">
+                <view class="service-name">{{item.name}}</view>
+                <view class="service-duration">约{{item.duration}}分钟</view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </block>
+
+      <view wx:else class="empty">
+        <text>您还没有会员卡</text>
+        <view class="empty-tip">请联系门店办理或选择散客预约</view>
+        <view class="retry-btn" bindtap="goBack">返回选择"没有卡"</view>
+      </view>
+    </block>
+
+    <!-- 非会员：显示所有服务 -->
+    <block wx:else>
+      <view class="section-title">选择服务（可多选）</view>
+      <view class="service-list multi">
+        <view 
+          class="service-item {{item.isSelected ? 'selected' : ''}}"
+          wx:for="{{guestServices}}"
+          wx:key="type"
+          bindtap="toggleService"
+          data-service="{{item}}"
+        >
+          <view class="service-check">{{item.isSelected ? '✓' : ''}}</view>
+          <view class="service-icon">{{item.icon}}</view>
+          <view class="service-info">
+            <view class="service-name">{{item.name}}</view>
+            <view class="service-duration">约{{item.duration}}分钟</view>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 下一步按钮 -->
+    <view class="next-btn-container" wx:if="{{selectedServices.length > 0}}">
+      <button class="btn-primary next-btn" bindtap="goToSelectTime">
+        下一步：选择时间
+      </button>
+    </view>
+  </view>
+
+  <!-- 步骤4: 选择时间 -->
+  <view class="step-content" wx:if="{{step === 4}}">
+    <!-- 已选信息 -->
+    <view class="selected-info">
+      <text class="label">门店：</text>
+      <text class="value">{{selectedStore.name}}</text>
+    </view>
+    <view class="selected-info">
+      <text class="label">服务：</text>
+      <text class="value">
+        <text wx:for="{{selectedServices}}" wx:key="type">{{item.name}}{{index < selectedServices.length - 1 ? '、' : ''}}</text>
+      </text>
+    </view>
+    <view class="selected-info" wx:if="{{isMember && selectedCard}}">
+      <text class="label">使用卡：</text>
+      <text class="value">{{selectedCard.card_name}}</text>
+    </view>
+
+    <!-- 选择日期 -->
+    <view class="section-title">选择日期</view>
+    <scroll-view class="date-scroll" scroll-x>
+      <view class="date-list">
+        <view 
+          class="date-item {{selectedDate === item.date ? 'selected' : ''}}"
+          wx:for="{{dates}}"
+          wx:key="date"
+          bindtap="selectDate"
+          data-date="{{item.date}}"
+        >
+          <view class="date-weekday">{{item.weekDay}}</view>
+          <view class="date-day">{{item.display}}</view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view wx:if="{{selectedDate}}">
+      <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+      <view wx:elif="{{availableStaff.length === 0}}" class="empty">
+        <text>该时段暂无可预约的员工</text>
+        <view class="empty-tip">请选择其他日期</view>
+      </view>
+
+      <view wx:else>
+        <!-- 选择员工 -->
+        <view class="section-title">选择技师</view>
+        <view class="staff-list">
+          <view 
+            class="staff-item {{selectedStaff && selectedStaff.staff.id === item.staff.id ? 'selected' : ''}}"
+            wx:for="{{availableStaff}}"
+            wx:key="index"
+            bindtap="selectStaff"
+            data-staff="{{item}}"
+          >
+            <view class="staff-avatar">👩</view>
+            <view class="staff-info">
+              <view class="staff-name">{{item.staff.real_name || item.staff.nickname || '技师'}}</view>
+              <view class="staff-intro">{{item.staff.introduction || '专业服务'}}</view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 选择时间 -->
+        <view wx:if="{{selectedStaff}}" class="time-section">
+          <view class="section-title">选择时间</view>
+          <view class="time-grid">
+            <view 
+              class="time-item {{selectedTime === item ? 'selected' : ''}}"
+              wx:for="{{selectedStaff.available_times}}"
+              wx:key="*this"
+              bindtap="selectTime"
+              data-time="{{item}}"
+            >
+              {{item}}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="bottom-bar" wx:if="{{step === 4 && selectedTime}}">
+    <view class="summary">
+      <view>{{selectedStore.name}}</view>
+      <view>{{selectedDate}} {{selectedTime}}</view>
+    </view>
+    <button class="btn-primary submit-btn" bindtap="submitAppointment" loading="{{loading}}">
+      确认预约
+    </button>
+  </view>
+</view>

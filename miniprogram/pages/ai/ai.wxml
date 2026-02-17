@@ -1,0 +1,72 @@
+<!-- pages/ai/ai.wxml -->
+<view class="ai-page">
+  <!-- 消息列表 -->
+  <view class="message-list">
+    <view 
+      class="message {{item.role}}"
+      wx:for="{{messages}}"
+      wx:key="index"
+    >
+      <view class="message-avatar {{item.role}}">
+        {{item.role === 'user' ? '我' : '燕儿'}}
+      </view>
+      <view class="message-content">
+        <text>{{item.content}}</text>
+        <!-- 操作按钮 -->
+        <view class="action-btn" wx:if="{{item.action === 'GOTO_BOOKING'}}" bindtap="handleAction" data-action="{{item.action}}">
+          📅 立即预约
+        </view>
+        <!-- AI生成标识 -->
+        <view class="ai-tag" wx:if="{{item.role === 'assistant'}}">
+          <text class="ai-icon">🤖</text>
+          <text>由AI生成，仅供参考</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 加载中 -->
+    <view class="message assistant" wx:if="{{loading}}">
+      <view class="message-avatar assistant">燕儿</view>
+      <view class="message-content loading">
+        <view class="dot"></view>
+        <view class="dot"></view>
+        <view class="dot"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 推荐问题 -->
+  <view class="suggestions" wx:if="{{messages.length <= 1 && suggestions.length > 0}}">
+    <view class="suggestions-title">您可以这样问我：</view>
+    <view class="suggestion-list">
+      <view 
+        class="suggestion-item"
+        wx:for="{{suggestions}}"
+        wx:key="*this"
+        bindtap="selectSuggestion"
+        data-text="{{item}}"
+      >
+        {{item}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <input 
+      class="input-box"
+      placeholder="请输入您的问题..."
+      value="{{inputText}}"
+      bindinput="onInput"
+      bindconfirm="sendMessage"
+      confirm-type="send"
+    />
+    <button 
+      class="send-btn {{canSend ? 'active' : ''}}" 
+      bindtap="sendMessage"
+      disabled="{{!canSend}}"
+    >
+      发送
+    </button>
+  </view>
+</view>

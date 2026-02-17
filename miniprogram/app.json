@@ -1,0 +1,64 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/appointment/appointment",
+    "pages/my/my",
+    "pages/ai/ai",
+    "pages/staff/index",
+    "pages/staff/schedule",
+    "pages/staff/appointments",
+    "pages/staff/addcard",
+    "pages/staff/newcard",
+    "pages/about/about"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "燕斛堂养发",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1AAD19",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/首页.jpeg",
+        "selectedIconPath": "images/首页.jpeg"
+      },
+      {
+        "pagePath": "pages/appointment/appointment",
+        "text": "预约",
+        "iconPath": "images/预约.jpeg",
+        "selectedIconPath": "images/预约.jpeg"
+      },
+      {
+        "pagePath": "pages/ai/ai",
+        "text": "AI咨询",
+        "iconPath": "images/AI咨询.jpeg",
+        "selectedIconPath": "images/AI咨询.jpeg"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "images/我的.jpeg",
+        "selectedIconPath": "images/我的.jpeg"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "requiredPrivateInfos": [
+    "getLocation"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "用于门店导航，获取您的位置以规划路线"
+    }
+  }
+}

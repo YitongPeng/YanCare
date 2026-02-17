@@ -1,0 +1,116 @@
+<!-- pages/staff/index.wxml -->
+<view class="staff-page">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="header-title">员工工作台</view>
+    <view class="header-user">{{userInfo ? (userInfo.real_name || userInfo.nickname || '员工') : '员工'}}</view>
+  </view>
+
+  <!-- 今日业绩 - 按门店分组 -->
+  <view class="stats-section">
+    <view class="section-title">今日业绩</view>
+    
+    <block wx:for="{{todayStatsByStore}}" wx:key="index">
+      <view class="store-stats-card">
+        <view class="store-name-badge">{{item.store.name}}</view>
+        <view class="stats-grid">
+          <view class="stat-item">
+            <view class="stat-value">{{item.stats.wash || 0}}</view>
+            <view class="stat-label">洗头</view>
+          </view>
+          <view class="stat-item">
+            <view class="stat-value">{{item.stats.soak || 0}}</view>
+            <view class="stat-label">泡头</view>
+          </view>
+          <view class="stat-item">
+            <view class="stat-value">{{item.stats.care || 0}}</view>
+            <view class="stat-label">养发</view>
+          </view>
+          <view class="stat-item highlight">
+            <view class="stat-value">{{item.stats.total || 0}}</view>
+            <view class="stat-label">总计</view>
+          </view>
+        </view>
+      </view>
+    </block>
+    
+    <view wx:if="{{todayStatsByStore.length === 0}}" class="empty">
+      加载中...
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="menu-section">
+    <view class="menu-item" bindtap="goToSchedule">
+      <view class="menu-icon">📅</view>
+      <view class="menu-info">
+        <view class="menu-title">排班设置</view>
+        <view class="menu-desc">设置上班时间和门店</view>
+      </view>
+      <view class="menu-arrow">›</view>
+    </view>
+    
+    <view class="menu-item" bindtap="goToAppointments">
+      <view class="menu-icon">📋</view>
+      <view class="menu-info">
+        <view class="menu-title">查看预约</view>
+        <view class="menu-desc">查看和核销客户预约</view>
+      </view>
+      <view class="menu-arrow">›</view>
+    </view>
+    
+    <view class="menu-item" bindtap="goToAddCard">
+      <view class="menu-icon">🔄</view>
+      <view class="menu-info">
+        <view class="menu-title">续卡</view>
+        <view class="menu-desc">为老客户续办疗程卡</view>
+      </view>
+      <view class="menu-arrow">›</view>
+    </view>
+    
+    <view class="menu-item" bindtap="goToNewCard">
+      <view class="menu-icon">💳</view>
+      <view class="menu-info">
+        <view class="menu-title">开卡</view>
+        <view class="menu-desc">为新客户办理疗程卡</view>
+      </view>
+      <view class="menu-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 今日预约 -->
+  <view class="appointments-section">
+    <view class="section-title">今日预约</view>
+    
+    <view wx:if="{{todayAppointments.length === 0}}" class="empty">
+      今日暂无预约
+    </view>
+    
+    <view class="appointment-list" wx:else>
+      <view 
+        class="appointment-item"
+        wx:for="{{todayAppointments}}"
+        wx:key="id"
+      >
+        <view class="apt-time">{{item.start_time}}</view>
+        <view class="apt-info">
+          <view class="apt-service">{{item.serviceText}}</view>
+          <view class="apt-customer">{{item.customer.nickname || '顾客'}}</view>
+        </view>
+        <view class="apt-status {{item.status}}">
+          {{item.status === 'completed' ? '已完成' : '待服务'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <view class="bottom-buttons">
+    <view class="back-btn" bindtap="backToCustomer">
+      返回客户端
+    </view>
+    <view class="logout-btn" bindtap="logout">
+      退出登录
+    </view>
+  </view>
+</view>

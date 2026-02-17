@@ -1,0 +1,134 @@
+<!-- pages/my/my.wxml -->
+<view class="my-page">
+  <!-- 用户信息 -->
+  <view class="user-section" wx:if="{{userInfo}}">
+    <view class="user-avatar">{{userInfo.nickname ? userInfo.nickname[0] : '用'}}</view>
+    <view class="user-info">
+      <view class="user-name">{{userInfo.nickname || '用户'}}</view>
+      <view class="user-phone" wx:if="{{userInfo.phone}}">{{userInfo.phone}}</view>
+      <view class="user-role">{{userInfo.role === 'staff' || userInfo.role === 'admin' ? '员工' : '顾客'}}</view>
+    </view>
+    <view class="bind-phone-btn" wx:if="{{!userInfo.phone}}" bindtap="showBindPhone">
+      绑定手机号
+    </view>
+  </view>
+
+  <!-- 绑定手机号弹窗 -->
+  <view class="modal-mask" wx:if="{{showPhoneModal}}" bindtap="hideBindPhone"></view>
+  <view class="modal-content" wx:if="{{showPhoneModal}}">
+    <view class="modal-title">绑定手机号</view>
+    <view class="modal-desc">绑定后可以同步您的会员卡信息</view>
+    <input 
+      class="phone-input"
+      type="number"
+      maxlength="11"
+      placeholder="请输入手机号"
+      value="{{bindPhone}}"
+      bindinput="onBindPhoneInput"
+    />
+    <view class="modal-buttons">
+      <button class="modal-btn cancel" bindtap="hideBindPhone">取消</button>
+      <button class="modal-btn confirm" bindtap="confirmBindPhone">确认绑定</button>
+    </view>
+  </view>
+
+  <!-- Tab切换 -->
+  <view class="tabs">
+    <view 
+      class="tab {{activeTab === 'cards' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="cards"
+    >
+      我的疗程卡
+    </view>
+    <view 
+      class="tab {{activeTab === 'appointments' ? 'active' : ''}}"
+      bindtap="switchTab"
+      data-tab="appointments"
+    >
+      我的预约
+    </view>
+  </view>
+
+  <!-- 我的疗程卡 -->
+  <view class="tab-content" wx:if="{{activeTab === 'cards'}}">
+    <view wx:if="{{myCards.length === 0}}" class="empty">
+      <view class="empty-icon">💳</view>
+      <view>暂无疗程卡</view>
+      <view class="empty-tip">请联系店员办理</view>
+    </view>
+    
+    <view class="card-list" wx:else>
+      <view 
+        class="card-item {{item.is_expired ? 'expired' : ''}}"
+        wx:for="{{myCards}}"
+        wx:key="id"
+      >
+        <view class="card-header">
+          <view class="card-name">{{item.card_name}}</view>
+          <view class="card-status" wx:if="{{item.is_expired}}">已过期</view>
+        </view>
+        <view class="card-body">
+          <view class="card-times">
+            <view class="times-label">剩余次数</view>
+            <view class="times-value">{{item.remaining_times || '无限'}}</view>
+          </view>
+          <view class="card-expire" wx:if="{{item.expire_date}}">
+            有效期至：{{item.expire_date}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 我的预约 -->
+  <view class="tab-content" wx:if="{{activeTab === 'appointments'}}">
+    <view wx:if="{{myAppointments.length === 0}}" class="empty">
+      <view class="empty-icon">📅</view>
+      <view>暂无预约</view>
+      <view class="empty-tip">去首页选择门店预约吧</view>
+    </view>
+    
+    <view class="appointment-list" wx:else>
+      <view 
+        class="appointment-item"
+        wx:for="{{myAppointments}}"
+        wx:key="id"
+      >
+        <view class="apt-header">
+          <view class="apt-service">{{item.serviceText}}</view>
+          <view class="apt-status {{item.status}}">{{item.statusText}}</view>
+        </view>
+        <view class="apt-body">
+          <view class="apt-info">📍 {{item.store.name}}</view>
+          <view class="apt-info">👩 {{item.staff.real_name || item.staff.nickname || '技师'}}</view>
+          <view class="apt-info">📅 {{item.appointment_date}} {{item.start_time}}</view>
+        </view>
+        <view class="apt-actions" wx:if="{{item.status === 'pending' || item.status === 'confirmed'}}">
+          <button 
+            class="cancel-btn"
+            size="mini"
+            bindtap="cancelAppointment"
+            data-id="{{item.id}}"
+          >
+            取消预约
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-item" bindtap="goToStaff" wx:if="{{userInfo.role === 'staff' || userInfo.role === 'admin'}}">
+      <text class="menu-icon">👩‍💼</text>
+      <text class="menu-text">进入员工端</text>
+      <text class="menu-arrow">›</text>
+    </view>
+    <view class="menu-item" bindtap="logout">
+      <text class="menu-icon">🚪</text>
+      <text class="menu-text">退出登录</text>
+      <text class="menu-arrow">›</text>
+    </view>
+  </view>
+</view>

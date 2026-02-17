@@ -1,0 +1,22 @@
+# macOS
+.DS_Store
+
+# Project documentation folder to exclude
+项目说明文档/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+
+# Node modules (if applicable)
+node_modules/
+
+# IDE
+.vscode/
+.idea/
