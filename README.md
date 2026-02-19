@@ -1,18 +1,4 @@
 # YanCare - AI驱动的智慧养发店小程序
-
-<div align="center">
-  <img src="基本信息/WechatIMG606.jpeg" width="200" alt="YanCare Logo">
-  
-  **为连锁养发馆打造的一站式服务管理小程序**
-  
-  [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-  [![WeChat Mini Program](https://img.shields.io/badge/微信小程序-已上线-07C160.svg)](https://mp.weixin.qq.com)
-  ![Python](https://img.shields.io/badge/Python-3.12+-3776AB.svg)
-  ![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688.svg)
-</div>
-
----
-
 ## 📱 项目简介
 
 **YanCare** 是一款专为燕斛堂养发馆设计的微信小程序，从0到1实现了预约管理、会员卡系统、AI智能客服的完整业务闭环。
@@ -24,23 +10,6 @@
 - 💳 **会员卡系统**：支持7种卡类型，自动扣次核销
 - 👥 **双端设计**：顾客端+员工端分离，满足不同角色需求
 - 🎯 **数据驱动**：北极星指标为月度线上预约完成数
-
-### 🎥 项目演示
-
-<table>
-  <tr>
-    <td><img src="miniprogram/images/首页.jpeg" width="200" alt="首页"></td>
-    <td><img src="miniprogram/images/预约.jpeg" width="200" alt="预约"></td>
-    <td><img src="miniprogram/images/AI咨询.jpeg" width="200" alt="AI咨询"></td>
-    <td><img src="miniprogram/images/我的.jpeg" width="200" alt="我的"></td>
-  </tr>
-  <tr>
-    <td align="center">首页</td>
-    <td align="center">预约服务</td>
-    <td align="center">AI咨询</td>
-    <td align="center">个人中心</td>
-  </tr>
-</table>
 
 ---
 
@@ -395,3 +364,4 @@ CHROMA_PERSIST_DIR=./chroma_db
   Made with ❤️ by Riley Peng
   
 </div>
+
