@@ -100,17 +100,11 @@ async def init_knowledge():
         sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
         
         # 导入知识库文档
-        from scripts.init_knowledge import (
-            SERVICE_DOCS, CARD_DOCS, HAIR_KNOWLEDGE_DOCS,
-            FAQ_DOCS, INGREDIENT_DOCS, BUSINESS_DOCS
-        )
+        from scripts.init_knowledge import SERVICE_DOCS, CARD_DOCS, FAQ_DOCS
         from app.services.rag import rag_service
         
         # 合并所有文档
-        all_docs = (
-            SERVICE_DOCS + CARD_DOCS + HAIR_KNOWLEDGE_DOCS +
-            FAQ_DOCS + INGREDIENT_DOCS + BUSINESS_DOCS
-        )
+        all_docs = SERVICE_DOCS + CARD_DOCS + FAQ_DOCS
         
         # 批量添加文档
         for doc in all_docs:
