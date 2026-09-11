@@ -71,6 +71,26 @@ async def health_check():
     return {"status": "healthy"}
 
 
+@app.post("/init-data")
+async def init_data():
+    """初始化数据（仅用于部署后首次初始化）"""
+    import sys
+    import os
+    
+    # 导入初始化脚本
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from scripts.init_data import init_card_types, init_stores, create_admin_user, create_test_staff
+    
+    try:
+        await init_card_types()
+        await init_stores()
+        await create_admin_user()
+        await create_test_staff()
+        return {"message": "数据初始化成功"}
+    except Exception as e:
+        return {"error": str(e)}
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
