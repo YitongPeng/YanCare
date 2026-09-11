@@ -91,6 +91,43 @@ async def init_data():
         return {"error": str(e)}
 
 
+@app.post("/init-knowledge")
+async def init_knowledge():
+    """初始化知识库（导入养发知识到向量数据库）"""
+    try:
+        import sys
+        import os
+        sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        
+        # 导入知识库文档
+        from scripts.init_knowledge import (
+            SERVICE_DOCS, CARD_DOCS, HAIR_KNOWLEDGE_DOCS,
+            FAQ_DOCS, INGREDIENT_DOCS, BUSINESS_DOCS
+        )
+        from app.services.rag import rag_service
+        
+        # 合并所有文档
+        all_docs = (
+            SERVICE_DOCS + CARD_DOCS + HAIR_KNOWLEDGE_DOCS +
+            FAQ_DOCS + INGREDIENT_DOCS + BUSINESS_DOCS
+        )
+        
+        # 批量添加文档
+        for doc in all_docs:
+            rag_service.add_document(
+                doc_id=doc["id"],
+                content=doc["content"],
+                metadata=doc["metadata"]
+            )
+        
+        return {
+            "message": "知识库初始化成功",
+            "total_docs": len(all_docs)
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
