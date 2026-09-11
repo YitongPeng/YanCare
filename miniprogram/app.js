@@ -4,7 +4,8 @@ App({
     userInfo: null,
     token: null,
     isStaff: false,
-    baseUrl: 'https://api.yanhutang.cn/api'  // 线上域名
+    baseUrl: 'https://你的Railway域名.up.railway.app/api'  // Railway部署后的域名
+    // baseUrl: 'https://api.yanhutang.cn/api'  // 旧的腾讯云域名
     // baseUrl: 'http://localhost:8000/api'  // 本地测试
   },
 

@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     
     # 数据库配置
+    # 本地开发用 SQLite，生产环境（Railway）自动用 PostgreSQL
     DATABASE_URL: str = "sqlite+aiosqlite:///./yancare.db"
     
     # JWT配置
