@@ -39,6 +39,7 @@ App({
         method,
         data,
         header,
+        timeout: 60000, // 设置60秒超时，适应国际服务器
         success: (res) => {
           if (res.statusCode === 200) {
             resolve(res.data);
@@ -52,7 +53,13 @@ App({
         },
         fail: (err) => {
           // 网络错误统一格式，确保有detail字段
-          reject({ detail: '网络连接失败，请检查网络', errMsg: err.errMsg });
+          console.error('网络请求失败:', err);
+          reject({ 
+            detail: err.errMsg?.includes('timeout') 
+              ? '网络连接超时，请稍后重试' 
+              : '网络连接失败，请检查网络', 
+            errMsg: err.errMsg 
+          });
         }
       });
     });
