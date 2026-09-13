@@ -29,16 +29,16 @@
 
 <table>
   <tr>
-    <td><img src="miniprogram/images/首页.jpeg" width="200" alt="首页"></td>
-    <td><img src="miniprogram/images/预约.jpeg" width="200" alt="预约"></td>
-    <td><img src="miniprogram/images/AI咨询.jpeg" width="200" alt="AI咨询"></td>
-    <td><img src="miniprogram/images/我的.jpeg" width="200" alt="我的"></td>
+    <td><img src="docs/screenshots/stores.png" width="200" alt="门店列表"></td>
+    <td><img src="docs/screenshots/appointment.png" width="200" alt="预约服务"></td>
+    <td><img src="docs/screenshots/ai-chat.png" width="200" alt="AI咨询"></td>
+    <td><img src="docs/screenshots/staff.png" width="200" alt="员工工作台"></td>
   </tr>
   <tr>
-    <td align="center">首页</td>
+    <td align="center">门店列表</td>
     <td align="center">预约服务</td>
-    <td align="center">AI咨询</td>
-    <td align="center">个人中心</td>
+    <td align="center">AI 智能咨询</td>
+    <td align="center">员工工作台</td>
   </tr>
 </table>
 
