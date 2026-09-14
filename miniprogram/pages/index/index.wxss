@@ -59,17 +59,14 @@
 
 /* 滑动区域 */
 .content-swiper {
-  flex: 1;
   width: 100%;
-  min-height: 800rpx;
-  height: calc(100vh - 240rpx);
+  /* 高度由 JS 动态设置，不在这里固定 */
 }
 
 .tab-content {
   height: 100%;
   padding: 20rpx;
   box-sizing: border-box;
-  overflow-y: auto;
 }
 
 /* ========== 服务页面样式 ========== */
