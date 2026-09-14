@@ -24,6 +24,41 @@ async def lifespan(app: FastAPI):
     # 启动时初始化数据库
     await init_db()
     print("数据库初始化完成")
+    
+    # 自动检测并初始化数据
+    try:
+        from app.database import get_db
+        from app.models import Store
+        from sqlalchemy import select
+        
+        async for db in get_db():
+            # 检查是否有门店数据
+            result = await db.execute(select(Store))
+            stores = result.scalars().all()
+            
+            if len(stores) == 0:
+                print("⚠️ 检测到数据库为空，开始自动初始化数据...")
+                
+                # 导入初始化脚本
+                import sys
+                import os
+                sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                
+                from scripts.init_data import init_card_types, init_stores, create_admin_user, create_test_staff
+                
+                await init_card_types()
+                await init_stores()
+                await create_admin_user()
+                await create_test_staff()
+                
+                print("✅ 数据自动初始化完成！")
+            else:
+                print(f"✅ 数据库已有 {len(stores)} 家门店，跳过初始化")
+            break
+    except Exception as e:
+        print(f"❌ 自动初始化数据失败: {e}")
+        print("可以手动调用 POST /init-data 来初始化数据")
+    
     yield
     # 关闭时的清理工作
     print("应用关闭")
