@@ -17,7 +17,11 @@ Page({
   },
 
   onShow() {
-    if (!app.checkLogin()) return;
+    // 检查登录状态，未登录会弹窗提示
+    if (!app.checkLogin('查看个人信息需要登录')) {
+      // 如果未登录，显示一个引导页面（可选）
+      return;
+    }
     
     this.setData({
       userInfo: app.globalData.userInfo

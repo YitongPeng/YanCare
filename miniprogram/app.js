@@ -107,11 +107,21 @@ App({
     });
   },
 
-  // 检查是否登录
-  checkLogin() {
+  // 检查是否登录（带友好提示）
+  checkLogin(tips = '此功能需要登录') {
     if (!this.globalData.token) {
-      wx.redirectTo({
-        url: '/pages/login/login'
+      wx.showModal({
+        title: '需要登录',
+        content: tips + '，是否前往登录？',
+        confirmText: '去登录',
+        cancelText: '取消',
+        success: (res) => {
+          if (res.confirm) {
+            wx.navigateTo({
+              url: '/pages/login/login'
+            });
+          }
+        }
       });
       return false;
     }
