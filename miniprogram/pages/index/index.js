@@ -47,16 +47,10 @@ Page({
     console.log('[index] onShow 开始');
     console.log('[index] token 状态:', !!app.globalData.token);
     
-    // 检查登录状态
-    if (!app.globalData.token) {
-      console.log('[index] 未登录，跳转到登录页');
-      wx.redirectTo({
-        url: '/pages/login/login'
-      });
-      return;
-    }
+    // 首页允许游客浏览，不强制登录（符合微信小程序规范）
+    // 只在点击需要登录的功能时才提示登录
     
-    console.log('[index] 已登录，当前门店数量:', this.data.stores.length);
+    console.log('[index] 当前门店数量:', this.data.stores.length);
     // 只有在没有门店数据时才重新加载（避免重复请求）
     if (this.data.stores.length === 0) {
       console.log('[index] 门店数据为空，开始加载');
@@ -175,6 +169,24 @@ Page({
   // 点击预约按钮
   goToAppointment(e) {
     try {
+      // 检查登录状态
+      if (!app.globalData.token) {
+        wx.showModal({
+          title: '需要登录',
+          content: '预约服务需要登录，是否前往登录？',
+          confirmText: '去登录',
+          cancelText: '再看看',
+          success: (res) => {
+            if (res.confirm) {
+              wx.navigateTo({
+                url: '/pages/login/login'
+              });
+            }
+          }
+        });
+        return;
+      }
+      
       const store = e.currentTarget.dataset.store;
       console.log('[index] 跳转预约，门店:', store);
       // 保存选中的门店到全局
