@@ -43,11 +43,24 @@ Page({
     // 检查是否从登录页返回，需要恢复预约流程
     const pendingStore = app.globalData.pendingAppointmentStore;
     if (pendingStore && app.globalData.token) {
+      // 登录成功后，重置流程，回到选择门店
       this.setData({
-        selectedStore: pendingStore,
-        step: 2  // 回到选择会员身份
+        selectedStore: null,
+        step: 1,
+        isMember: null,
+        selectedCard: null,
+        selectedServices: [],
+        selectedDate: '',
+        selectedTime: '',
+        selectedStaff: null
       });
       app.globalData.pendingAppointmentStore = null;
+      
+      // 提示用户重新开始
+      wx.showToast({
+        title: '登录成功，请重新选择',
+        icon: 'success'
+      });
     }
   },
 

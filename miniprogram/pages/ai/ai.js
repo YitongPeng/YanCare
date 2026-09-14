@@ -25,7 +25,10 @@ Page({
   // 加载推荐问题
   async loadSuggestions() {
     try {
-      const res = await app.request({ url: '/ai/suggestions' });
+      const res = await app.request({ 
+        url: '/ai/suggestions',
+        needAuth: false  // AI咨询无需登录
+      });
       this.setData({ suggestions: res.suggestions });
     } catch (err) {
       console.error('加载推荐问题失败:', err);
@@ -83,7 +86,8 @@ Page({
         data: {
           message: inputText,
           history: history
-        }
+        },
+        needAuth: false  // AI咨询无需登录，游客也可使用
       });
       
       // 解析AI回复，检查是否包含操作标记
