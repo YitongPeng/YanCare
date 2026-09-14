@@ -169,24 +169,6 @@ Page({
   // 点击预约按钮
   goToAppointment(e) {
     try {
-      // 检查登录状态
-      if (!app.globalData.token) {
-        wx.showModal({
-          title: '需要登录',
-          content: '预约服务需要登录，是否前往登录？',
-          confirmText: '去登录',
-          cancelText: '再看看',
-          success: (res) => {
-            if (res.confirm) {
-              wx.navigateTo({
-                url: '/pages/login/login'
-              });
-            }
-          }
-        });
-        return;
-      }
-      
       const store = e.currentTarget.dataset.store;
       console.log('[index] 跳转预约，门店:', store);
       // 保存选中的门店到全局

@@ -48,13 +48,26 @@
   flex: 1;
 }
 
-.bind-phone-btn {
+.user-tip {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.bind-phone-btn,
+.login-btn {
   background: rgba(255, 255, 255, 0.2);
   color: #fff;
   font-size: 26rpx;
   padding: 16rpx 30rpx;
   border-radius: 30rpx;
   border: 1rpx solid rgba(255, 255, 255, 0.5);
+}
+
+.login-btn {
+  background: #fff;
+  color: #1AAD19;
+  border: none;
+  font-weight: 600;
 }
 
 /* 弹窗 */

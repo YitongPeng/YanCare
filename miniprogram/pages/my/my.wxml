@@ -1,6 +1,6 @@
 <!-- pages/my/my.wxml -->
 <view class="my-page">
-  <!-- 用户信息 -->
+  <!-- 用户信息（已登录） -->
   <view class="user-section" wx:if="{{userInfo}}">
     <view class="user-avatar">{{userInfo.nickname ? userInfo.nickname[0] : '用'}}</view>
     <view class="user-info">
@@ -11,6 +11,16 @@
     <view class="bind-phone-btn" wx:if="{{!userInfo.phone}}" bindtap="showBindPhone">
       绑定手机号
     </view>
+  </view>
+
+  <!-- 登录引导（未登录） -->
+  <view class="user-section guest" wx:else>
+    <view class="user-avatar guest-avatar">未</view>
+    <view class="user-info">
+      <view class="user-name">未登录</view>
+      <view class="user-tip">登录后查看会员卡和预约</view>
+    </view>
+    <button class="login-btn" bindtap="guideLogin">登录</button>
   </view>
 
   <!-- 绑定手机号弹窗 -->

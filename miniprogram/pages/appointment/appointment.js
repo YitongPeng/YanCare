@@ -39,6 +39,16 @@ Page({
       });
       app.globalData.selectedStore = null;
     }
+    
+    // 检查是否从登录页返回，需要恢复预约流程
+    const pendingStore = app.globalData.pendingAppointmentStore;
+    if (pendingStore && app.globalData.token) {
+      this.setData({
+        selectedStore: pendingStore,
+        step: 2  // 回到选择会员身份
+      });
+      app.globalData.pendingAppointmentStore = null;
+    }
   },
 
   // 加载门店列表
@@ -156,6 +166,30 @@ Page({
   selectMemberStatus(e) {
     const isMember = e.currentTarget.dataset.ismember;
     
+    // 检查登录状态
+    if (!app.globalData.token) {
+      wx.showModal({
+        title: '需要登录',
+        content: '预约服务需要登录，是否前往登录？',
+        confirmText: '去登录',
+        cancelText: '取消',
+        success: (res) => {
+          if (res.confirm) {
+            // 保存当前选择的门店，登录后恢复
+            app.globalData.pendingAppointmentStore = this.data.selectedStore;
+            wx.navigateTo({
+              url: '/pages/login/login'
+            });
+          } else {
+            // 取消登录，返回选择门店
+            this.setData({ step: 1 });
+          }
+        }
+      });
+      return;
+    }
+    
+    // 已登录，继续流程
     // 重置散客服务的选中状态
     const guestServices = this.data.guestServices.map(s => ({
       ...s,

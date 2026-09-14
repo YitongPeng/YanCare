@@ -17,18 +17,22 @@ Page({
   },
 
   onShow() {
-    // 检查登录状态，未登录会弹窗提示
-    if (!app.checkLogin('查看个人信息需要登录')) {
-      // 如果未登录，显示一个引导页面（可选）
-      return;
+    // 检查登录状态
+    if (app.globalData.token && app.globalData.userInfo) {
+      // 已登录，加载用户数据
+      this.setData({
+        userInfo: app.globalData.userInfo
+      });
+      this.loadMyCards();
+      this.loadMyAppointments();
+    } else {
+      // 未登录，显示登录引导
+      this.setData({
+        userInfo: null,
+        myCards: [],
+        myAppointments: []
+      });
     }
-    
-    this.setData({
-      userInfo: app.globalData.userInfo
-    });
-    
-    this.loadMyCards();
-    this.loadMyAppointments();
   },
 
   // 加载我的卡
@@ -70,6 +74,23 @@ Page({
     } catch (err) {
       console.error('加载预约列表失败:', err);
     }
+  },
+
+  // 引导登录
+  guideLogin() {
+    wx.showModal({
+      title: '需要登录',
+      content: '登录后可以查看您的会员卡和预约信息',
+      confirmText: '去登录',
+      cancelText: '取消',
+      success: (res) => {
+        if (res.confirm) {
+          wx.navigateTo({
+            url: '/pages/login/login'
+          });
+        }
+      }
+    });
   },
 
   // 切换Tab
