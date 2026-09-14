@@ -34,7 +34,10 @@ Page({
       });
       return;
     }
-    this.loadStores();
+    // 只有在没有门店数据时才重新加载（避免重复请求）
+    if (this.data.stores.length === 0) {
+      this.loadStores();
+    }
   },
 
   // 获取用户位置
@@ -99,9 +102,20 @@ Page({
     } catch (err) {
       console.error('加载门店失败:', err);
       this.setData({ loading: false });
-      wx.showToast({
-        title: '加载失败',
-        icon: 'none'
+      
+      // 显示具体的错误信息
+      const errorMsg = err.detail || err.errMsg || '网络连接失败';
+      wx.showModal({
+        title: '加载门店失败',
+        content: errorMsg + '\n\n请检查网络或稍后重试',
+        showCancel: true,
+        cancelText: '取消',
+        confirmText: '重试',
+        success: (res) => {
+          if (res.confirm) {
+            this.loadStores();
+          }
+        }
       });
     }
   },
