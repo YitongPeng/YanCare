@@ -68,9 +68,10 @@
   background: #fff;
   color: #1AAD19;
   border: none;
-  font-weight: 600;
-  padding: 12rpx 24rpx;  /* 缩小内边距 */
-  font-size: 24rpx;  /* 稍微减小字体 */
+  font-weight: 500;
+  padding: 8rpx 20rpx;  /* 进一步缩小 */
+  font-size: 22rpx;  /* 更小的字体 */
+  flex-shrink: 0;  /* 防止被挤压 */
 }
 
 /* 弹窗 */

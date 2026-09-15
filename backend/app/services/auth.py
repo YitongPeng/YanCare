@@ -16,6 +16,7 @@ from app.models.user import User, UserRole
 
 
 security = HTTPBearer()
+security_optional = HTTPBearer(auto_error=False)  # 可选的认证，不自动抛出错误
 
 
 class AuthService:
@@ -288,7 +289,36 @@ async def require_admin(
     return current_user
 
 
+async def get_current_user_optional(
+    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security_optional),
+    db: AsyncSession = Depends(get_db)
+) -> Optional[User]:
+    """
+    获取当前用户（可选）
+    如果未登录或token无效，返回None而不是抛出异常
+    用于游客也可以访问的接口
+    """
+    if not credentials:
+        return None
+        
+    try:
+        token = credentials.credentials
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
+        user_id = int(payload.get("sub"))
+        
+        result = await db.execute(select(User).where(User.id == user_id))
+        user = result.scalar_one_or_none()
+        
+        if user and user.is_active:
+            return user
+    except (JWTError, ValueError, Exception):
+        pass  # 忽略错误，返回None
+    
+    return None
+
+
 # 绑定到类上，方便导入使用
 AuthService.get_current_user = get_current_user
+AuthService.get_current_user_optional = get_current_user_optional
 AuthService.require_staff = require_staff
 AuthService.require_admin = require_admin

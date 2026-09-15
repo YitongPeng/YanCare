@@ -34,18 +34,19 @@ class ChatResponse(BaseModel):
 async def chat(
     request: ChatRequest,
     db: AsyncSession = Depends(get_db),
-    current_user = Depends(AuthService.get_current_user)
+    current_user = Depends(AuthService.get_current_user_optional)
 ):
     """
     AI咨询对话
     
     使用DeepSeek API进行养发相关的智能问答
+    游客模式：无需登录即可使用
     """
     ai_service = AIService()
     reply = await ai_service.chat(
         message=request.message,
         history=request.history,
-        user_id=current_user.id
+        user_id=current_user.id if current_user else None
     )
     return ChatResponse(reply=reply)
 

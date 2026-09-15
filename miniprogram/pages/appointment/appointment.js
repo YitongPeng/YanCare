@@ -30,23 +30,14 @@ Page({
   },
 
   onShow() {
-    // 检查是否从首页传来了选中的门店
-    const selectedStore = app.globalData.selectedStore;
-    if (selectedStore) {
-      this.setData({
-        selectedStore: selectedStore,
-        step: 2
-      });
-      app.globalData.selectedStore = null;
-    }
-    
-    // 检查是否从登录页返回，需要恢复预约流程
+    // 检查是否从登录页返回（优先处理）
     const pendingStore = app.globalData.pendingAppointmentStore;
     if (pendingStore && app.globalData.token) {
-      // 登录成功后，重置流程，回到选择门店
+      // 登录成功后，回到选择门店（step 1）
+      console.log('[appointment] 登录成功返回，重置到step 1');
       this.setData({
-        selectedStore: null,
-        step: 1,
+        selectedStore: null,  // 清空之前选择的门店
+        step: 1,  // 回到选择门店
         isMember: null,
         selectedCard: null,
         selectedServices: [],
@@ -54,13 +45,20 @@ Page({
         selectedTime: '',
         selectedStaff: null
       });
+      // 清除标记
       app.globalData.pendingAppointmentStore = null;
-      
-      // 提示用户重新开始
-      wx.showToast({
-        title: '登录成功，请重新选择',
-        icon: 'success'
+      return;  // 直接返回，不执行后面的逻辑
+    }
+    
+    // 检查是否从首页传来了选中的门店
+    const selectedStore = app.globalData.selectedStore;
+    if (selectedStore) {
+      console.log('[appointment] 从首页选择门店:', selectedStore.name);
+      this.setData({
+        selectedStore: selectedStore,
+        step: 2
       });
+      app.globalData.selectedStore = null;
     }
   },
 

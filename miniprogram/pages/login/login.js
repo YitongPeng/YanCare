@@ -109,16 +109,26 @@ Page({
         icon: 'success'
       });
 
-      // 根据角色跳转到不同页面
+      // 根据角色和来源跳转到不同页面
       setTimeout(() => {
         if (role === 'staff') {
+          // 员工登录
           wx.reLaunch({
             url: '/pages/staff/index'
           });
         } else {
-          wx.switchTab({
-            url: '/pages/index/index'
-          });
+          // 顾客登录 - 检查是否从预约流程跳转来的
+          if (app.globalData.pendingAppointmentStore) {
+            // 从预约流程来的，返回预约页
+            wx.switchTab({
+              url: '/pages/appointment/appointment'
+            });
+          } else {
+            // 正常登录，跳转首页
+            wx.switchTab({
+              url: '/pages/index/index'
+            });
+          }
         }
       }, 1000);
     } catch (err) {
