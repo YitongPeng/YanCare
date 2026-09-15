@@ -29,14 +29,27 @@ Page({
     try {
       const systemInfo = wx.getSystemInfoSync();
       console.log('[index] 系统信息:', systemInfo);
-      // 头部约120rpx = 60px，tab约56rpx = 28px，底部tabBar约100px，留些余量
-      const headerHeight = 60;
-      const tabHeight = 28;
-      const tabBarHeight = 50;
+      
+      // 使用 rpx 转 px 的比例，确保在不同设备上一致
+      const pixelRatio = systemInfo.pixelRatio || 2;
+      const screenWidth = systemInfo.screenWidth || 375;
+      const rpxToPx = screenWidth / 750;  // 小程序规范：750rpx = 屏幕宽度
+      
+      // 头部约120rpx，tab约56rpx，底部tabBar约100rpx
+      const headerHeight = 120 * rpxToPx;
+      const tabHeight = 56 * rpxToPx;
+      const tabBarHeight = 100 * rpxToPx;
+      
       const swiperHeight = systemInfo.windowHeight - headerHeight - tabHeight - tabBarHeight;
       const finalHeight = Math.max(swiperHeight, 400);
-      console.log('[index] 计算的swiper高度:', finalHeight);
-      this.setData({ swiperHeight: finalHeight });
+      
+      console.log('[index] swiper高度计算:', {
+        windowHeight: systemInfo.windowHeight,
+        rpxToPx: rpxToPx.toFixed(2),
+        finalHeight: finalHeight.toFixed(0)
+      });
+      
+      this.setData({ swiperHeight: Math.round(finalHeight) });
     } catch (err) {
       console.error('[index] calculateSwiperHeight 错误:', err);
       this.setData({ swiperHeight: 600 });

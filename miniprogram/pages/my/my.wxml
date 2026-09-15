@@ -30,7 +30,7 @@
     <view class="modal-desc">绑定后可以同步您的会员卡信息</view>
     <input 
       class="phone-input"
-      type="number"
+      type="digit"
       maxlength="11"
       placeholder="请输入手机号"
       value="{{bindPhone}}"

@@ -19,6 +19,20 @@ App({
       this.globalData.userInfo = userInfo;
       this.globalData.isStaff = userInfo.role === 'staff' || userInfo.role === 'admin';
     }
+    
+    // 获取系统信息，用于兼容性处理
+    try {
+      const systemInfo = wx.getSystemInfoSync();
+      this.globalData.systemInfo = systemInfo;
+      console.log('系统信息:', {
+        platform: systemInfo.platform,
+        system: systemInfo.system,
+        version: systemInfo.version,
+        SDKVersion: systemInfo.SDKVersion
+      });
+    } catch (err) {
+      console.error('获取系统信息失败:', err);
+    }
   },
 
   // 封装请求方法

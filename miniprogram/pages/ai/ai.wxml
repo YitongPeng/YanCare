@@ -55,6 +55,7 @@
   <view class="input-area">
     <input 
       class="input-box"
+      type="text"
       placeholder="请输入您的问题..."
       value="{{inputText}}"
       bindinput="onInput"
