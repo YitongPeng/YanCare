@@ -27,7 +27,13 @@
   <view class="modal-mask" wx:if="{{showPhoneModal}}" bindtap="hideBindPhone"></view>
   <view class="modal-content" wx:if="{{showPhoneModal}}">
     <view class="modal-title">绑定手机号</view>
-    <view class="modal-desc">绑定后可以同步您的会员卡信息</view>
+    <view class="modal-desc">
+      绑定后可以同步您的会员卡信息。
+      我们将收集您的手机号用于：
+      1. 同步会员卡信息
+      2. 预约服务通知
+      我们承诺保护您的隐私安全。
+    </view>
     <input 
       class="phone-input"
       type="digit"
@@ -36,6 +42,10 @@
       value="{{bindPhone}}"
       bindinput="onBindPhoneInput"
     />
+    <view class="privacy-tip">
+      绑定即表示同意
+      <navigator url="/pages/about/about?type=privacy" class="link">《隐私政策》</navigator>
+    </view>
     <view class="modal-buttons">
       <button class="modal-btn cancel" bindtap="hideBindPhone">取消</button>
       <button class="modal-btn confirm" bindtap="confirmBindPhone">确认绑定</button>

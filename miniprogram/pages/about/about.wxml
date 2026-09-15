@@ -45,10 +45,11 @@
         <view class="paragraph">燕斛堂养发小程序（以下简称"我们"）非常重视用户的隐私保护。本隐私政策说明我们如何收集、使用、存储您的个人信息。</view>
         
         <view class="subtitle">一、我们收集的信息</view>
-        <view class="paragraph">1. <text class="bold">姓名/昵称</text>：用于创建账号和识别用户身份。</view>
-        <view class="paragraph">2. <text class="bold">位置信息</text>：仅在您点击"导航"功能时获取，用于规划到门店的路线。我们不会在后台持续获取您的位置。</view>
-        <view class="paragraph">3. <text class="bold">预约信息</text>：包括预约时间、门店、服务项目等，用于提供预约服务。</view>
-        <view class="paragraph">4. <text class="bold">对话记录</text>：您与AI助手的对话内容，用于提供智能咨询服务。</view>
+        <view class="paragraph">1. <text class="bold">姓名/昵称</text>：用于创建账号和识别用户身份，在您注册登录时收集。</view>
+        <view class="paragraph">2. <text class="bold">手机号码</text>（可选）：用于同步会员卡信息、预约服务通知。仅在您主动选择绑定时收集，您可以选择不绑定。</view>
+        <view class="paragraph">3. <text class="bold">位置信息</text>：仅在您点击"导航"功能时获取，用于规划到门店的路线。我们不会在后台持续获取您的位置。</view>
+        <view class="paragraph">4. <text class="bold">预约信息</text>：包括预约时间、门店、服务项目等，用于提供预约服务。</view>
+        <view class="paragraph">5. <text class="bold">对话记录</text>：您与AI助手的对话内容，用于提供智能咨询服务。</view>
         
         <view class="subtitle">二、信息的使用</view>
         <view class="paragraph">我们收集的信息仅用于：</view>
