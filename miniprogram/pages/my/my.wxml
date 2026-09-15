@@ -18,7 +18,7 @@
     <view class="user-avatar guest-avatar">未</view>
     <view class="user-info">
       <view class="user-name">未登录</view>
-      <view class="user-tip">登录后查看会员卡和预约</view>
+      <view class="user-tip">登录查看会员卡</view>
     </view>
     <button class="login-btn" bindtap="guideLogin">登录</button>
   </view>

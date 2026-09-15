@@ -69,9 +69,10 @@
   color: #1AAD19;
   border: none;
   font-weight: 500;
-  padding: 8rpx 20rpx;  /* 进一步缩小 */
-  font-size: 22rpx;  /* 更小的字体 */
+  padding: 10rpx 16rpx;  /* 上下稍大，左右更小 */
+  font-size: 26rpx;  /* 字体稍大 */
   flex-shrink: 0;  /* 防止被挤压 */
+  min-width: auto;  /* 不设置最小宽度 */
 }
 
 /* 弹窗 */
